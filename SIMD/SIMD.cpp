@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "SIMD.h"
 
 void assembler() {
 	float f1[] = { 1.f,2.f,3.f,4.f };
