@@ -4,6 +4,47 @@ using namespace std;
 
 #include <omp.h>
 
+// parallelize for loop
+void pfor(){
+	const int length = 1024 * 1024 * 64;
+	float *a = new float[length],
+		*b = new float[length],
+		*c = new float[length],
+		*result = new float[length];
+
+#pragma omp parallel for
+	for (int i = 0; i < length; i++)
+	{
+		result[i] = a[i] + b[i] * erff(c[i]);
+	}
+
+	delete[] a;
+	delete[] b;
+	delete[] c;
+	delete[] result;
+}
+
+// parallelize sections
+void sections() {
+#pragma omp sections
+	{
+#pragma omp section
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				cout << i;
+			}
+		}
+#pragma omp section
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				cout << static_cast<char>('a' + (i % 26));
+			}
+		}
+	}
+}
+
 void hello_openmp(){
   omp_set_num_threads(8);
 
@@ -17,9 +58,11 @@ void hello_openmp(){
 
 int main(int argc, char* argv[])
 {
-  hello_openmp();
+	//hello_openmp();
+	//pfor();
+	sections(); 
 
-  getchar();
+	getchar();
 	return 0;
 }
 
